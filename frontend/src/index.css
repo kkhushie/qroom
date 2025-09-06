@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'QroomFont';
+    src: url('./assets/fonts/qroom-font.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'QroomFont';
+}
+  
