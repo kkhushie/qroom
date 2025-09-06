@@ -1,10 +1,13 @@
-const Qroom=require('../models/qroom.model')
+const Qroom = require('../models/qroom.model')
 const generateCode = require('../utils/generateCode');
 
 exports.createQroom = async (req, res) => {
   try {
-    const { title } = req.body;
-    const host = req.user.id;
+    console.log(req.body);
+    const { title,description,host  } = req.body;
+    if (!title || !host) {
+      return res.status(400).json({ error: 'Title and host are required' });
+    }
 
     const code = await generateCode();
 
@@ -24,4 +27,18 @@ exports.createQroom = async (req, res) => {
   }
 };
 
-// exports.
+exports.listQrooms = async(req,res)=>{
+  try {
+    const { hostId } = req.body;
+
+    if (!hostId) {
+      return res.status(400).json({ message: "HostId is required" });
+    }
+
+    const qrooms = await Qroom.find({ hostId }).sort({ createdAt: -1 });
+    
+    res.status(200).json(qrooms);
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+}

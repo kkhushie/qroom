@@ -18,7 +18,7 @@ const HeroSection = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 animate-fade-in">
             <Link
-              to="/register"
+              to="/create-qroom"
               className="bg-black text-white px-6 py-3 rounded font-bold hover:bg-gray-800 transition"
             >
               🎤 Start as Host

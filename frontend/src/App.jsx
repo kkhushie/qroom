@@ -8,6 +8,7 @@ import JoinRoom from "./pages/JoinRoom";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DashboardLayout from "./pages/DashboardLayout";
+import CreateQroom from "./pages/CreateQroom";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Registration />} />
+      <Route path="join" element={<JoinRoom />} />
 
       {/* Protected Dashboard routes with shared layout */}
       <Route
@@ -27,8 +29,8 @@ const App = () => {
         }
       >
         <Route path="dashboard" element={<Dashboard />} />
-        <Route path="join" element={<JoinRoom />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="create-qroom" element={<CreateQroom />} />
         {/* later add: <Route path="create-qroom" element={<CreateQroom />} /> */}
       </Route>
     </Routes>

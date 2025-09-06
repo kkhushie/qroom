@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../utils/logout';
-
+import axios from 'axios';
+const url="http://localhost:3000"
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [qrooms, setQrooms] = useState([]);
+
+  const user = JSON.parse(localStorage.getItem("qroom_user"));
+  const host = user?.id;
 
   const handleLogout = () => {
     logoutUser(navigate);
@@ -18,19 +23,27 @@ const Dashboard = () => {
   };
 
   const handleViewQroom = (code) => {
+
     navigate(`/qroom/${code}`);
   };
-
+  // ✅ Fetch Qrooms on mount
+  useEffect(() => {
+    if (host) {
+      axios.post(`${url}/api/qroom/list`, { hostId: host })
+        .then(res => setQrooms(res.data))
+        .catch(err => console.error("Error fetching qrooms:", err));
+    }
+  }, [host]);
   return (
     <div className="min-h-screen">
-     
+
 
       {/* Welcome Section */}
       <div className="bg-white rounded-xl shadow-2xl border-2 border-black p-6 mb-8">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome back! 👋</h2>
           <p className="text-gray-600 mb-6">Ready to create engaging sessions and gather valuable feedback?</p>
-          
+
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border-2 border-blue-200">
@@ -62,7 +75,7 @@ const Dashboard = () => {
             </div>
             <h2 className="font-bold text-2xl mb-4 text-gray-900">Create New Qroom</h2>
             <p className="text-gray-600 mb-6">Start a new interactive session and generate a unique room code for your audience to join.</p>
-            <button 
+            <button
               onClick={handleNewQroom}
               className="w-full py-4 px-8 bg-black text-white rounded-lg font-bold hover:bg-gray-800 transition-all duration-200 border-3 border-black hover:scale-105 shadow-lg"
             >
@@ -78,7 +91,7 @@ const Dashboard = () => {
             </div>
             <h2 className="font-bold text-2xl mb-4 text-gray-900">Join Existing Room</h2>
             <p className="text-gray-600 mb-6">Enter a room code to participate in an ongoing session and share your feedback.</p>
-            <button 
+            <button
               onClick={handleJoinQroom}
               className="w-full py-4 px-8 bg-gray-800 text-white rounded-lg font-bold hover:bg-black transition-all duration-200 border-3 border-gray-800 hover:scale-105 shadow-lg"
             >
@@ -98,7 +111,7 @@ const Dashboard = () => {
               <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full border-2 border-gray-300 font-medium">
                 2 Active Sessions
               </span>
-              <button 
+              <button
                 onClick={handleNewQroom}
                 className="px-4 py-2 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition text-sm"
               >
@@ -106,7 +119,7 @@ const Dashboard = () => {
               </button>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <div className="p-6 border-2 border-gray-200 rounded-xl hover:border-black  transition-all duration-200 cursor-pointer group hover:shadow-lg">
               <div className="flex justify-between items-start">
@@ -136,7 +149,7 @@ const Dashboard = () => {
                     </span>
                   </div>
                 </div>
-                <button 
+                <button
                   onClick={() => handleViewQroom('12345')}
                   className="px-4 py-2 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-all duration-200 hover:scale-105"
                 >
@@ -173,7 +186,7 @@ const Dashboard = () => {
                     </span>
                   </div>
                 </div>
-                <button 
+                <button
                   onClick={() => handleViewQroom('67890')}
                   className="px-4 py-2 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-all duration-200 hover:scale-105"
                 >
@@ -186,7 +199,7 @@ const Dashboard = () => {
               <div className="py-8">
                 <div className="text-4xl mb-3">🎯</div>
                 <p className="text-gray-600 text-lg mb-4">Ready to create another room?</p>
-                <button 
+                <button
                   onClick={handleNewQroom}
                   className="px-6 py-3 bg-black text-white rounded-lg font-bold hover:bg-gray-800 transition-all duration-200 hover:scale-105"
                 >
@@ -239,8 +252,8 @@ const Dashboard = () => {
                   </div>
                 </div>
               </button>
-              
-              <button 
+
+              <button
                 onClick={() => navigate('/profile')}
                 className="w-full p-4 text-left border-2 border-gray-200 rounded-lg hover:border-black transition-all duration-200 hover:shadow-md group"
               >
@@ -254,7 +267,7 @@ const Dashboard = () => {
                   </div>
                 </div>
               </button>
-              
+
               <button className="w-full p-4 text-left border-2 border-gray-200 rounded-lg hover:border-black transition-all duration-200 hover:shadow-md group">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center border-2 border-yellow-300">
