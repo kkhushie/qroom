@@ -4,7 +4,7 @@ const generateCode = require('../utils/generateCode');
 exports.createQroom = async (req, res) => {
   try {
     console.log(req.body);
-    const { title,description,host  } = req.body;
+    const { title, description, host } = req.body;
     if (!title || !host) {
       return res.status(400).json({ error: 'Title and host are required' });
     }
@@ -13,14 +13,27 @@ exports.createQroom = async (req, res) => {
 
     const newQroom = await Qroom.create({
       title,
+      description, // You were missing this!
       host,
       code,
-      questions: [],       // initially no questions
-      active: true,        // session is active by default
-      createdAt: new Date() // optional, auto-set by schema if not included
+      questions: [],
+      active: true,
+      createdAt: new Date()
     });
 
-    res.status(201).json(newQroom);
+    // Return the complete Qroom data including code
+    res.status(201).json({
+      success: true,
+      qroom: {
+        id: newQroom._id,
+        title: newQroom.title,
+        code: newQroom.code,
+        description: newQroom.description,
+        host: newQroom.host,
+        active: newQroom.active,
+        createdAt: newQroom.createdAt
+      }
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to create Qroom' });
