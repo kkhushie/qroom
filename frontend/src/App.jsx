@@ -11,6 +11,8 @@ import DashboardLayout from "./pages/DashboardLayout";
 import CreateQroom from "./pages/CreateQroom";
 import NotFound from './pages/NotFound';
 import QroomParticipant from './pages/QroomParticipant';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 
 const App = () => {
   return (
@@ -21,6 +23,8 @@ const App = () => {
       <Route path="/register" element={<Registration />} />
       <Route path="join" element={<JoinRoom />} />
       <Route path="/qroom/:code" element={<QroomParticipant />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
 
       {/* Protected Dashboard routes with shared layout */}
       <Route
