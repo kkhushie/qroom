@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DashboardLayout from "./pages/DashboardLayout";
 import CreateQroom from "./pages/CreateQroom";
+import NotFound from './pages/NotFound';
 
 const App = () => {
   return (
@@ -32,6 +33,9 @@ const App = () => {
         <Route path="profile" element={<Profile />} />
         <Route path="create-qroom" element={<CreateQroom />} />
         {/* later add: <Route path="create-qroom" element={<CreateQroom />} /> */}
+
+        <Route path="*" element={<NotFound />} />
+
       </Route>
     </Routes>
   );
