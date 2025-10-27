@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import RootLayout from "./layouts/RootLayout";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import Dashboard from "./pages/Dashboard";
@@ -17,31 +18,30 @@ import Terms from './pages/Terms';
 const App = () => {
   return (
     <Routes>
-      {/* Public routes */}
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Registration />} />
-      <Route path="join" element={<JoinRoom />} />
-      <Route path="/qroom/:code" element={<QroomParticipant />} />
-      <Route path="/privacy" element={<Privacy />} />
-      <Route path="/terms" element={<Terms />} />
+      <Route element={<RootLayout />}>
+        {/* Public routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Registration />} />
+        <Route path="join" element={<JoinRoom />} />
+        <Route path="/qroom/:code" element={<QroomParticipant />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
 
-      {/* Protected Dashboard routes with shared layout */}
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <DashboardLayout />
-          </ProtectedRoute>
-        }
-      >
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="create-qroom" element={<CreateQroom />} />
-        {/* later add: <Route path="create-qroom" element={<CreateQroom />} /> */}
-
-        <Route path="*" element={<NotFound />} />
-
+        {/* Protected Dashboard routes */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="create-qroom" element={<CreateQroom />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Route>
     </Routes>
   );
